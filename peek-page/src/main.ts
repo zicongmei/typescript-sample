@@ -17,29 +17,31 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         try {
-            // Using a proxy to bypass CORS issues for fetching external content.
-            // For production, you would typically have your own backend proxy.
-            // This example uses a public CORS proxy. Be aware of its limitations and reliability.
-            const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
-            const response = await fetch(proxyUrl);
+            // Attempting to fetch directly.
+            // Be aware that most external websites will block this due to CORS (Cross-Origin Resource Sharing) policies.
+            // This will likely result in a "Failed to fetch" network error in the browser console.
+            // The Access-Control-Allow-Origin header is typically set by the server in its response
+            // to permit cross-origin requests, not by the client in its request.
+            // Adding it here will not bypass CORS restrictions imposed by the server.
+            const response = await fetch(url, {
+                headers: {
+                    // This header is primarily for server responses to allow cross-origin access.
+                    // Including it in a client-side request will not force a server to allow CORS,
+                    // and browsers typically ignore this header when sent in a request.
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
 
             if (!response.ok) {
-                // allorigins.win returns 200 even for some errors, but we can check the content.
-                // For a more robust check, you might inspect `data.status.http_code` or `data.status.message`.
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
 
-            const data = await response.json();
-            // The actual content is usually in data.contents when using allorigins.win
-            if (data.contents) {
-                contentBox.textContent = data.contents;
-            } else {
-                contentBox.textContent = 'Could not retrieve content from the URL. Check console for details from proxy.';
-            }
+            const content = await response.text();
+            contentBox.textContent = content;
 
         } catch (error: any) {
             console.error('Error fetching URL content:', error);
-            errorMessage.textContent = `Failed to fetch content: ${error.message}. Please ensure the URL is valid and accessible. Due to browser security (CORS), direct fetching of many external sites is blocked. This example uses a public CORS proxy.`;
+            errorMessage.textContent = `Failed to fetch content: ${error.message}. Please ensure the URL is valid and accessible. Due to browser security (CORS), direct fetching of most external sites is blocked unless the server explicitly allows it for your origin.`;
             contentBox.textContent = 'Content will appear here...';
         }
     });

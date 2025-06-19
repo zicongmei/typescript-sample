@@ -1,0 +1,11 @@
+{
+  "name": "simple-calculator-ts",
+  "version": "1.0.0",
+  "description": "A simple calculator in TypeScript",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0" 
+  }
+}

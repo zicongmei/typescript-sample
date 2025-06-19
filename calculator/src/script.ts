@@ -47,7 +47,8 @@ function inputDecimal(dot: string): void {
     }
 
     // If the `displayValue` does not contain a decimal point
-    if (!calculatorState.displayValue.includes(dot)) {
+    // Using indexOf instead of includes for broader compatibility or if lib is not es2015+
+    if (calculatorState.displayValue.indexOf(dot) === -1) {
         calculatorState.displayValue += dot;
     }
     updateDisplay();

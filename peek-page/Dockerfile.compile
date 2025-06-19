@@ -1,0 +1,18 @@
+# Use a Node.js image as the base, which includes npm and tsc capability
+FROM node:lts-alpine
+
+# Set the working directory inside the container
+WORKDIR /app
+
+# Copy your package.json and package-lock.json to install dependencies
+COPY package*.json ./
+
+# Install dependencies, including TypeScript (as a dev dependency or globally if preferred)
+RUN npm install
+
+# Copy your TypeScript source code
+COPY . .
+
+# Run the TypeScript compiler
+# Assuming your tsconfig.json is in the root and configured to output to 'dist'
+CMD ["npx", "tsc"]

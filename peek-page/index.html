@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>URL Content Viewer</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .container { max-width: 800px; margin: auto; }
+        input[type="text"] { width: 100%; padding: 8px; margin-bottom: 10px; }
+        button { padding: 10px 15px; background-color: #007bff; color: white; border: none; cursor: pointer; }
+        button:hover { background-color: #0056b3; }
+        #contentBox { border: 1px solid #ccc; padding: 15px; margin-top: 20px; min-height: 200px; overflow-y: auto; background-color: #f9f9f9; white-space: pre-wrap; word-wrap: break-word; }
+        .error { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>URL Content Viewer</h1>
+        <input type="text" id="urlInput" placeholder="Enter URL (e.g., https://example.com)">
+        <button id="fetchButton">Fetch Content</button>
+        <div id="errorMessage" class="error"></div>
+        <div id="contentBox">
+            Content will appear here...
+        </div>
+    </div>
+
+    <script src="dist/main.js"></script>
+</body>
+</html>
